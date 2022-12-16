@@ -31,10 +31,13 @@ export default function App() {
   }
 
   const login = ( username, password ) => {
+    setSpinnerOn(true);
+    setMessage('');
     axios.post(loginUrl, {'username': username, 'password': password})
     .then(res => {
       setMessage(res.data.message);
       localStorage.setItem('token', res.data.token);
+      setSpinnerOn(false);
       navigate('articles');
     })
     .catch(err => {
