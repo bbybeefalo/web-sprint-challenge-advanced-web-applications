@@ -8,7 +8,7 @@ const initialFormValues = {
 }
 export default function LoginForm(props) {
   const [values, setValues] = useState(initialFormValues)
-  // ✨ where are my props? Destructure them here
+  const { login } = props
 
   const onChange = evt => {
     const { id, value } = evt.target
@@ -17,22 +17,7 @@ export default function LoginForm(props) {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    axios.post('http://localhost:9000/api/login', values)
-    .then(res => {
-      localStorage.setItem('token', res.data.token);
-      console.log('yao');
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  const isDisabled = () => {
-  
-    // ✨ implement
-    // Trimmed username must be >= 3, and
-    // trimmed password must be >= 8 for
-    // the button to become enabled
+    login(values.username, values.password);
   }
 
   return (
@@ -52,7 +37,7 @@ export default function LoginForm(props) {
         placeholder="Enter password"
         id="password"
       />
-      <button disabled={(values.password.trim()).length>= 8 && (values.username.trim()).length >= 3 ? false : true} id="submitCredentials">Submit credentials</button>
+      <button disabled={(values.password.trim()).length >= 8 && (values.username.trim()).length >= 3 ? false : true} id="submitCredentials">Submit credentials</button>
     </form>
   )
 }
