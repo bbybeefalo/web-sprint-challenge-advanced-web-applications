@@ -6,6 +6,8 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
+import { axiosWithAuth } from '../axios'
+
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -52,6 +54,18 @@ export default function App() {
   }
 
   const getArticles = () => {
+    setSpinnerOn(true)
+    axiosWithAuth().get(articlesUrl)
+    .then(res => {
+      setMessage(res.data.message);
+      console.log('hellurrr?', res.data);
+      setArticles([...res.data.articles]);
+      console.log(articles);
+      setSpinnerOn(false);
+    })
+    .catch(err => {
+      console.log(err);
+    })
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch an authenticated request to the proper endpoint.
@@ -81,7 +95,7 @@ export default function App() {
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner />
+      <Spinner on={spinnerOn}/>
       <Message message={message}/>
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
@@ -95,7 +109,7 @@ export default function App() {
           <Route path="articles" element={
             <>
               <ArticleForm />
-              <Articles />
+              <Articles getArticles={getArticles} articles={articles}/>
             </>
           } />
         </Routes>
