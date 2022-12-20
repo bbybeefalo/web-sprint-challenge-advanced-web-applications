@@ -25,6 +25,10 @@ export default function App() {
   const redirectToArticles = () => { /* ✨ implement */ }
 
   const logout = () => {
+    localStorage.removeItem('token');
+    setMessage('Goodbye!');
+    navigate('/');
+
     // ✨ implement
     // If a token is in local storage it should be removed,
     // and a message saying "Goodbye!" should be set in its proper state.
