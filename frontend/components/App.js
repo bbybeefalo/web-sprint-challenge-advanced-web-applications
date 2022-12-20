@@ -28,12 +28,6 @@ export default function App() {
     localStorage.removeItem('token');
     setMessage('Goodbye!');
     navigate('/');
-
-    // ✨ implement
-    // If a token is in local storage it should be removed,
-    // and a message saying "Goodbye!" should be set in its proper state.
-    // In any case, we should redirect the browser back to the login screen,
-    // using the helper above.
   }
 
   const login = (username, password) => {
@@ -49,12 +43,6 @@ export default function App() {
       .catch(err => {
         console.log(err.response.data.message);
       })
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch a request to the proper endpoint.
-    // On success, we should set the token to local storage in a 'token' key,
-    // put the server success message in its proper state, and redirect
-    // to the Articles screen. Don't forget to turn off the spinner!
   }
 
   const getArticles = () => {
@@ -67,6 +55,7 @@ export default function App() {
       })
       .catch(err => {
         console.log(err);
+        navigate('/');
       })
     // ✨ implement
     // We should flush the message state, turn on the spinner
@@ -79,6 +68,17 @@ export default function App() {
   }
 
   const postArticle = article => {
+    setSpinnerOn(true);
+    axiosWithAuth().post(articlesUrl, article)
+    .then(res => {
+      console.log(res);
+      setSpinnerOn(false);
+      setMessage(res.data.message);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
     // ✨ implement
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
@@ -110,8 +110,8 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
-              <Articles getArticles={getArticles} articles={articles} />
+              <ArticleForm postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId} currentArticle={currentArticleId} />
+              <Articles getArticles={getArticles} articles={articles} deleteArticle={deleteArticle} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId}/>
             </>
           } />
         </Routes>
