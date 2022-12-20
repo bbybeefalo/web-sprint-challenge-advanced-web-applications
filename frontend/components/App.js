@@ -32,19 +32,19 @@ export default function App() {
     // using the helper above.
   }
 
-  const login = ( username, password ) => {
+  const login = (username, password) => {
     setSpinnerOn(true);
     setMessage('');
-    axios.post(loginUrl, {'username': username, 'password': password})
-    .then(res => {
-      setMessage(res.data.message);
-      localStorage.setItem('token', res.data.token);
-      setSpinnerOn(false);
-      navigate('articles');
-    })
-    .catch(err => {
-      console.log(err.response.data.message);
-    })
+    axios.post(loginUrl, { 'username': username, 'password': password })
+      .then(res => {
+        setMessage(res.data.message);
+        localStorage.setItem('token', res.data.token);
+        setSpinnerOn(false);
+        navigate('articles');
+      })
+      .catch(err => {
+        console.log(err.response.data.message);
+      })
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch a request to the proper endpoint.
@@ -56,16 +56,14 @@ export default function App() {
   const getArticles = () => {
     setSpinnerOn(true)
     axiosWithAuth().get(articlesUrl)
-    .then(res => {
-      setMessage(res.data.message);
-      console.log('hellurrr?', res.data);
-      setArticles([...res.data.articles]);
-      console.log(articles);
-      setSpinnerOn(false);
-    })
-    .catch(err => {
-      console.log(err);
-    })
+      .then(res => {
+        setMessage(res.data.message);
+        setArticles([...res.data.articles]);
+        setSpinnerOn(false);
+      })
+      .catch(err => {
+        console.log(err);
+      })
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch an authenticated request to the proper endpoint.
@@ -95,8 +93,8 @@ export default function App() {
   return (
     // ✨ fix the JSX: `Spinner`, `Message`, `LoginForm`, `ArticleForm` and `Articles` expect props ❗
     <>
-      <Spinner on={spinnerOn}/>
-      <Message message={message}/>
+      <Spinner on={spinnerOn} />
+      <Message message={message} />
       <button id="logout" onClick={logout}>Logout from app</button>
       <div id="wrapper" style={{ opacity: spinnerOn ? "0.25" : "1" }}> {/* <-- do not change this line */}
         <h1>Advanced Web Applications</h1>
@@ -105,11 +103,11 @@ export default function App() {
           <NavLink id="articlesScreen" to="/articles">Articles</NavLink>
         </nav>
         <Routes>
-          <Route path="/" element={<LoginForm login={login}/>} />
+          <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
             <>
               <ArticleForm />
-              <Articles getArticles={getArticles} articles={articles}/>
+              <Articles getArticles={getArticles} articles={articles} />
             </>
           } />
         </Routes>
