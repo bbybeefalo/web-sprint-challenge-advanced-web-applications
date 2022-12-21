@@ -22,9 +22,7 @@ export default function App() {
 
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
-  const redirectToLogin = () => { 
-}
-  const redirectToArticles = () => { /* ✨ implement */ }
+
 
   const logout = () => {
     localStorage.removeItem('token');
@@ -59,14 +57,6 @@ export default function App() {
         console.log(err);
         navigate('/');
       })
-    // ✨ implement
-    // We should flush the message state, turn on the spinner
-    // and launch an authenticated request to the proper endpoint.
-    // On success, we should set the articles in their proper state and
-    // put the server success message in its proper state.
-    // If something goes wrong, check the status of the response:
-    // if it's a 401 the token might have gone bad, and we should redirect to login.
-    // Don't forget to turn off the spinner!
   }
 
   const postArticle = article => {
@@ -89,10 +79,6 @@ export default function App() {
       .catch(err => {
         console.log(err)
       })
-    // ✨ implement
-    // The flow is very similar to the `getArticles` function.
-    // You'll know what to do! Use log statements or breakpoints
-    // to inspect the response from the server.
   }
 
   const updateArticle = ( article_id, article ) => {
