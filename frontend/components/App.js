@@ -112,7 +112,7 @@ export default function App() {
         setSpinnerOn(false)
       })
 
-      axiosWithAuth().get(articlesUrl)
+    axiosWithAuth().get(articlesUrl)
       .then(res => {
         setArticles([...res.data.articles])
       })
@@ -139,8 +139,18 @@ export default function App() {
             <>
               <ArticleForm
                 articles={articles}
-                getArticles={getArticles} postArticle={postArticle} updateArticle={updateArticle} setCurrentArticleId={setCurrentArticleId} currentArticle={currentArticleId} setArticles={setArticles} />
-              <Articles setArticles={setArticles} getArticles={getArticles} articles={articles} deleteArticle={deleteArticle} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} />
+                getArticles={getArticles}
+                postArticle={postArticle}
+                updateArticle={updateArticle}
+                setCurrentArticleId={setCurrentArticleId}
+                currentArticle={currentArticleId}
+                setArticles={setArticles} />
+              <Articles
+                setArticles={setArticles}
+                getArticles={getArticles}
+                articles={articles}
+                deleteArticle={deleteArticle}
+                setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} />
             </>
           } />
         </Routes>
