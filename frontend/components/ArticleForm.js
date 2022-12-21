@@ -25,7 +25,6 @@ export default function ArticleForm(props) {
     if (!currentArticle) {
       postArticle({title: values.title, text: values.text, topic: values.topic})
     } 
-    setArticles([...articles]);
     setValues(initialFormValues);
     // ✨ implement
     // We must submit a new post or update an existing one,
