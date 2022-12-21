@@ -5,23 +5,34 @@ const initialFormValues = { title: '', text: '', topic: '' }
 
 export default function ArticleForm(props) {
   const [values, setValues] = useState(initialFormValues)
+  const [currentArticle, setCurrentArticle] = useState();
   // ✨ where are my props? Destructure them here
-  const { articles, setArticles, getArticles, postArticle, updateArticle, setCurrentArticleId, currentArticle } = props
+  const { articles, currentArticleId, setArticles, getArticles, postArticle, updateArticle, setCurrentArticleId} = props
+
+  
 
   useEffect(() => {
-    if (currentArticle) {
-      setValues({
-        title: currentArticle.title,
-        text: currentArticle.text,
-        topic: currentArticle.topic
-      })
-    } else {
-      setValues(initialFormValues);
+    if (currentArticleId) {
+      setCurrentArticle(articles.filter(art => art.article_id === currentArticleId));
     }
+    
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding
     // values of the form. If it's not, we should reset the form back to initial values.
+  }, [currentArticleId])
+
+  useEffect(() => {
+    if (currentArticle) {
+      console.log('hi', currentArticle[0])
+      setValues({
+        title: `${currentArticle[0].title}`,
+        text: `${currentArticle[0].text}`,
+        topic: `${currentArticle[0].topic}`
+      })
+    } else {
+      setValues(initialFormValues)
+    }
   }, [currentArticle])
 
   const onChange = evt => {
@@ -40,33 +51,37 @@ export default function ArticleForm(props) {
     // depending on the truthyness of the `currentArticle` prop.
   }
 
+  const cancelClick = (evt) => {
+    setCurrentArticle(null);
+  }
+
   return (
     // and replace Function.prototype with the correct function
-    <form id="form" onSubmit={onSubmit}>
-      <h2>{currentArticle ? 'Edit' : 'Create'} Article</h2>
+    <form id="form">
+      <h2>{currentArticleId ? 'Edit' : 'Create'} Article</h2>
       <input
         maxLength={50}
         onChange={onChange}
-        value={values.title}
+        value={values.title || ''}
         placeholder="Enter title"
         id="title"
       />
       <textarea
         maxLength={200}
         onChange={onChange}
-        value={values.text}
+        value={values.text || ''}
         placeholder="Enter text"
         id="text"
       />
-      <select onChange={onChange} id="topic" value={values.topic}>
+      <select onChange={onChange} id="topic" value={values.topic || ''}>
         <option value="">-- Select topic --</option>
         <option value="JavaScript">JavaScript</option>
         <option value="React">React</option>
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={values.title && values.text && values.topic ? false : true } id="submitArticle">Submit</button>
-        <button onClick={Function.prototype}>Cancel edit</button>
+        <button disabled={values.title && values.text && values.topic ? false : true }  onClick={onSubmit}id="submitArticle">Submit</button>
+        <button onClick={cancelClick}>Cancel edit</button>
       </div>
     </form>
   )
