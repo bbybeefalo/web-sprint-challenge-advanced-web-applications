@@ -105,6 +105,14 @@ export default function App() {
       console.log(err);
       setSpinnerOn(false);
     })
+
+    axiosWithAuth().get(articlesUrl)
+      .then(res => {
+        setArticles([...res.data.articles])
+      })
+      .catch(err => {
+        console.log(err)
+      })
     // ✨ implement
     // You got this!
   }
