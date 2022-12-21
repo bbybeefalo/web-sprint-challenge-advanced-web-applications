@@ -111,7 +111,8 @@ export default function App() {
         setArticles([...res.data.articles])
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
+        console.log('heck');
       })
     // ✨ implement
     // You got this!
