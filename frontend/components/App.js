@@ -94,13 +94,14 @@ export default function App() {
   }
 
   const updateArticle = ({ article_id, article }) => {
+
     // ✨ implement
     // You got this!
   }
 
-  const deleteArticle = article_id => {
+  const deleteArticle = art_id => {
     setSpinnerOn(true);
-    axiosWithAuth().delete('http://localhost:9000/api/articles/' + article_id)
+    axiosWithAuth().delete('http://localhost:9000/api/articles/' + art_id)
       .then(res => {
         console.log(res);
         setMessage(res.data.message);
@@ -109,6 +110,14 @@ export default function App() {
       .catch(err => {
         console.log(err);
         setSpinnerOn(false)
+      })
+
+      axiosWithAuth().get(articlesUrl)
+      .then(res => {
+        setArticles([...res.data.articles])
+      })
+      .catch(err => {
+        console.log(err)
       })
   }
 

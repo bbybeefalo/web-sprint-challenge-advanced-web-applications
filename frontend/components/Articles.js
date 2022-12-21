@@ -18,7 +18,12 @@ export default function Articles(props) {
   const deleteClick = (evt) => {
     deleteArticle(evt.target.id);
     console.log(evt.target.id);
-    setArticles(articles.filter(article => article.article_id === evt.target.id))
+    console.log(articles)
+  }
+
+  const handleEditClick = (evt) => {
+    setCurrentArticleId(Number(evt.target.id));
+    console.log(currentArticleId);
   }
 
   return (
@@ -38,7 +43,7 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={Function.prototype}>Edit</button>
+                  <button disabled={false} onClick={handleEditClick}>Edit</button>
                   <button id={art.article_id} disabled={false} onClick={deleteClick}>Delete</button>
                 </div>
               </div>
