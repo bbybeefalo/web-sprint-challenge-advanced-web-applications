@@ -9,6 +9,15 @@ export default function ArticleForm(props) {
   const { articles, setArticles, getArticles, postArticle, updateArticle, setCurrentArticleId, currentArticle } = props
 
   useEffect(() => {
+    if (currentArticle) {
+      setValues({
+        title: currentArticle.title,
+        text: currentArticle.text,
+        topic: currentArticle.topic
+      })
+    } else {
+      setValues(initialFormValues);
+    }
     // ✨ implement
     // Every time the `currentArticle` prop changes, we should check it for truthiness:
     // if it's truthy, we should set its title, text and topic into the corresponding

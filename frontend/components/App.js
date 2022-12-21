@@ -103,22 +103,22 @@ export default function App() {
     setSpinnerOn(true);
     axiosWithAuth().delete('http://localhost:9000/api/articles/' + art_id)
       .then(res => {
-        console.log(res);
         setMessage(res.data.message);
         setSpinnerOn(false);
+        axiosWithAuth().get(articlesUrl)
+          .then(res => {
+            setArticles([...res.data.articles])
+          })
+          .catch(err => {
+            console.log(err)
+          })
       })
       .catch(err => {
         console.log(err);
         setSpinnerOn(false)
       })
 
-    axiosWithAuth().get(articlesUrl)
-      .then(res => {
-        setArticles([...res.data.articles])
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
   }
 
   return (
@@ -143,7 +143,7 @@ export default function App() {
                 postArticle={postArticle}
                 updateArticle={updateArticle}
                 setCurrentArticleId={setCurrentArticleId}
-                currentArticle={currentArticleId}
+                currentArticleId={currentArticleId}
                 setArticles={setArticles} />
               <Articles
                 setArticles={setArticles}
