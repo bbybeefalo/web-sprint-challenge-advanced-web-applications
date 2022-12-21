@@ -7,6 +7,7 @@ import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
 import { axiosWithAuth } from '../axios'
+import PrivateRoute from './PrivateRoute'
 
 
 const articlesUrl = 'http://localhost:9000/api/articles'
@@ -21,7 +22,8 @@ export default function App() {
 
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
-  const redirectToLogin = () => { /* ✨ implement */ }
+  const redirectToLogin = () => { 
+}
   const redirectToArticles = () => { /* ✨ implement */ }
 
   const logout = () => {
@@ -155,7 +157,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LoginForm login={login} />} />
           <Route path="articles" element={
-            <>
+            <PrivateRoute>
+            
               <ArticleForm
                 articles={articles}
                 getArticles={getArticles}
@@ -170,7 +173,8 @@ export default function App() {
                 articles={articles}
                 deleteArticle={deleteArticle}
                 setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} />
-            </>
+            
+            </PrivateRoute>
           } />
         </Routes>
         <footer>Bloom Institute of Technology 2022</footer>
