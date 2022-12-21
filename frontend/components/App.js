@@ -93,8 +93,18 @@ export default function App() {
     // to inspect the response from the server.
   }
 
-  const updateArticle = ({ article_id, article }) => {
-
+  const updateArticle = ( article_id, article ) => {
+    setSpinnerOn(true);
+    axiosWithAuth().put(articlesUrl + '/' + article_id, article)
+    .then(res=> {
+      console.log(res.data);
+      setMessage(res.data.message);
+      setSpinnerOn(false);
+    })
+    .catch(err => {
+      console.log(err);
+      setSpinnerOn(false);
+    })
     // ✨ implement
     // You got this!
   }

@@ -24,7 +24,6 @@ export default function ArticleForm(props) {
 
   useEffect(() => {
     if (currentArticle) {
-      console.log('hi', currentArticle[0])
       setValues({
         title: `${currentArticle[0].title}`,
         text: `${currentArticle[0].text}`,
@@ -44,7 +43,9 @@ export default function ArticleForm(props) {
     evt.preventDefault()
     if (!currentArticle) {
       postArticle({title: values.title, text: values.text, topic: values.topic})
-    } 
+    } else {
+      updateArticle(currentArticleId, values)
+    }
     setValues(initialFormValues);
     // ✨ implement
     // We must submit a new post or update an existing one,
